@@ -26,19 +26,23 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'EZCOMERCE_PLUGIN_VERSION', '1.0.0' );
 
+
+
+//***********************************INVITATION CODE FEATURE***********************************
 /**
  * Adds the inviation code feature on the registration page.
  */
-require('invitation_code/invitation-code.php');
+require(plugin_dir_path( __FILE__ ) .'invitation_code/invitation-code.php');
 add_action( 'user_register', 'update_user_role_on_registration', 10, 1 );
 
 /**
  * Adds the inviation codes admin menu.
  */
-require('invitation_code/admin/invitation-code-menu.php');
+require(plugin_dir_path( __FILE__ ) .'invitation_code/admin/invitation-code-menu.php');
 add_action('admin_menu', 'addInvitationCodeContent');
 
 
+//***********************************DISCOUNT PER ROLE FEATURE***********************************
 /**
  * Adds the discount percentage per user role.
  */
@@ -47,5 +51,17 @@ add_action('admin_menu', 'addInvitationCodeContent');
 /**
  * Adds the discount percentage admin menu.
  */
-require('price_by_role/admin/price-by-role-menu.php');
+require(plugin_dir_path( __FILE__ ) .'price_by_role/admin/price-by-role-menu.php');
 add_action('admin_menu', 'addPriceByRoleContent');
+
+
+//*************************************FEES PER ROLE FEATURE*************************************
+/**
+ * Adds the surcharge to cart in checkout depending on the role.
+ */
+require(plugin_dir_path( __FILE__ ) .'fees_by_role/fees-by-role.php');
+add_action( 'woocommerce_cart_calculate_fees','ez_custom_fee' );
+
+/**
+ * Adds the fees admin menu.
+ */

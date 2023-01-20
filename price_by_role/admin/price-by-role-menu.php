@@ -1,5 +1,7 @@
 <?php
 
+require(plugin_dir_path( __FILE__ ) .'price_by_role/includes/pbr-aux-functions.php');
+
 function addPriceByRoleContent() {
     add_menu_page('precio-por-rol', 'Precios por Rol', 'manage_options' ,__FILE__, 'priceByRoleAdminPage', 'dashicons-money');
 }

@@ -1,5 +1,7 @@
 <?php
 
+require(plugin_dir_path( __FILE__ ) .'invitation_code/includes/ic-aux-functions.php');
+
 function addInvitationCodeContent() {
     add_menu_page('codigos-invitacion', 'Códigos de Invitación', 'manage_options' ,__FILE__, 'invitationCodeAdminPage', 'dashicons-nametag');
 }
