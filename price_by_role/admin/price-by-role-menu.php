@@ -1,12 +1,12 @@
 <?php
 
-require(plugin_dir_path( __FILE__ ) .'price_by_role/includes/pbr-aux-functions.php');
+require(EZ_PLUGIN_DIR . '/price_by_role/includes/pbr-aux-functions.php');
 
-function addPriceByRoleContent() {
-    add_menu_page('precio-por-rol', 'Precios por Rol', 'manage_options' ,__FILE__, 'priceByRoleAdminPage', 'dashicons-money');
+function add_price_by_role_content() {
+    add_menu_page('precio-por-rol', 'Precios por Rol', 'manage_options' ,__FILE__, 'price_by_role_admin_page', 'dashicons-money');
 }
 
-function priceByRoleAdminPage() {
+function price_by_role_admin_page() {
     global $wpdb;
 	$admin_price_by_role_url = 'admin.php?page=ezcomerce-plugin%2Fprice_by_role%2Fadmin%2Fprice-by-role-menu.php';
     $table_name = $wpdb->prefix . 'ez_price_by_role';

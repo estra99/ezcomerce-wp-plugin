@@ -1,6 +1,6 @@
 <?php
 
-require(plugin_dir_path( __FILE__ ) .'invitation_code/includes/ic-aux-functions.php');
+include_once(EZ_PLUGIN_DIR . '/invitation_code/includes/ic-aux-functions.php');
 
 function update_user_role_on_registration( $user_id ){
 
@@ -15,7 +15,6 @@ function update_user_role_on_registration( $user_id ){
         $user->add_role( $role );
 
 		$user->remove_role( 'customer' );
-
     }		
     
 }

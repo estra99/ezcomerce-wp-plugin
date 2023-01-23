@@ -1,12 +1,12 @@
 <?php
 
-require(plugin_dir_path( __FILE__ ) .'invitation_code/includes/ic-aux-functions.php');
+include_once(EZ_PLUGIN_DIR .'/invitation_code/includes/ic-aux-functions.php');
 
-function addInvitationCodeContent() {
-    add_menu_page('codigos-invitacion', 'Códigos de Invitación', 'manage_options' ,__FILE__, 'invitationCodeAdminPage', 'dashicons-nametag');
+function add_invitation_code_content() {
+    add_menu_page('codigos-invitacion', 'Códigos de Invitación', 'manage_options' ,__FILE__, 'invitation_code_admin_page', 'dashicons-nametag');
 }
 
-function invitationCodeAdminPage() {
+function invitation_code_admin_page() {
     global $wpdb;
 	$admin_invitation_code_url = 'admin.php?page=ezcomerce-plugin%2Finvitation_code%2Fadmin%2Finvitation-code-menu.php';
     $table_name = $wpdb->prefix . 'ez_invitation_codes';

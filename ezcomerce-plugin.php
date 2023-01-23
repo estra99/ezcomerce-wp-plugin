@@ -26,20 +26,21 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'EZCOMERCE_PLUGIN_VERSION', '1.0.0' );
 
+define('EZ_PLUGIN_DIR', WP_PLUGIN_DIR . '/ezcomerce-plugin');
 
 
 //***********************************INVITATION CODE FEATURE***********************************
 /**
  * Adds the inviation code feature on the registration page.
  */
-require(plugin_dir_path( __FILE__ ) .'invitation_code/invitation-code.php');
+require(EZ_PLUGIN_DIR . '/invitation_code/invitation-code.php');
 add_action( 'user_register', 'update_user_role_on_registration', 10, 1 );
 
 /**
  * Adds the inviation codes admin menu.
  */
-require(plugin_dir_path( __FILE__ ) .'invitation_code/admin/invitation-code-menu.php');
-add_action('admin_menu', 'addInvitationCodeContent');
+require(EZ_PLUGIN_DIR . '/invitation_code/admin/invitation-code-menu.php');
+add_action('admin_menu', 'add_invitation_code_content');
 
 
 //***********************************DISCOUNT PER ROLE FEATURE***********************************
@@ -51,15 +52,25 @@ add_action('admin_menu', 'addInvitationCodeContent');
 /**
  * Adds the discount percentage admin menu.
  */
-require(plugin_dir_path( __FILE__ ) .'price_by_role/admin/price-by-role-menu.php');
-add_action('admin_menu', 'addPriceByRoleContent');
+require(EZ_PLUGIN_DIR . '/price_by_role/admin/price-by-role-menu.php');
+add_action('admin_menu', 'add_price_by_role_content');
+
+
+
+//***********************************EXTEND PRICE BY ROLE FEATURE***********************************
+/**
+ * Adds the surcharge to cart in checkout depending on the role.
+ */
+require(EZ_PLUGIN_DIR . '/extend_price_by_role/extend-price-by-role');
+add_filter( 'woocommerce_get_price_html', 'elex_get_price_display_html_filter', 999, 2 );
+
 
 
 //*************************************FEES PER ROLE FEATURE*************************************
 /**
  * Adds the surcharge to cart in checkout depending on the role.
  */
-require(plugin_dir_path( __FILE__ ) .'fees_by_role/fees-by-role.php');
+require(EZ_PLUGIN_DIR . '/fees_by_role/fees-by-role.php');
 add_action( 'woocommerce_cart_calculate_fees','ez_custom_fee' );
 
 /**

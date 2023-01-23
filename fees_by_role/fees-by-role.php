@@ -1,17 +1,27 @@
 <?php
 
-require(plugin_dir_path( __FILE__ ) .'fees_by_role/includes/fbr-aux-functions.php');
+include_once(EZ_PLUGIN_DIR .'/fees_by_role/includes/fbr-aux-functions.php');
 
 function ez_custom_fee() {
 
     global $woocommerce; // instance of woocommerce plugin
     
 
-    if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {  // checks if user is admin and ajax is defined
-        return
-    }
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )  // checks if user is admin and ajax is defined
+        return;
         
     $user_roles = get_current_user_roles(); // gets the current user's roles
+
+
+    if ($user_roles[0] == 'socio_vendedor'){ // checks if current user has roles assigned
+
+		$commission = 0.12;
+		$surcharge = ( $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total ) * $commission;	
+		$woocommerce->cart->add_fee( 'Comisión Socio Vendedor', $surcharge, false, '' );
+    }
+
+
+    /*
 
     if (!empty($user_roles)){ // checks if current user has roles assigned
 
@@ -22,10 +32,5 @@ function ez_custom_fee() {
 	    $surcharge = ( $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total ) * $fee->fee_percentage; // creates the surchange to be applied
 	    
         $woocommerce->cart->add_fee( $fee->fee_name, $surcharge, true, '' ); // adds the fee to the checkout cart.
-    }
+    }*/
 }
-
-/**
- * TODO:
- * - Validate if woocommerce is installed.
- */  
