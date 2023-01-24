@@ -12,25 +12,17 @@ function ez_custom_fee() {
         
     $user_roles = get_current_user_roles(); // gets the current user's roles
 
-
-    if ($user_roles[0] == 'socio_vendedor'){ // checks if current user has roles assigned
-
-		$commission = 0.12;
-		$surcharge = ( $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total ) * $commission;	
-		$woocommerce->cart->add_fee( 'Comisión Socio Vendedor', $surcharge, false, '' );
-    }
-
-
-    /*
-
     if (!empty($user_roles)){ // checks if current user has roles assigned
 
-        $main_role = $user_roles[0]; // gets the first role (assuming Ezcomerce users won't have more than one or the first is the main)
+        $main_role = $user_roles[0]; // gets the first role (assuming users' first role is the main)
         
         $fee = get_fee_info($main_role); // gets the fee info
-    
-	    $surcharge = ( $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total ) * $fee->fee_percentage; // creates the surchange to be applied
+
+        if (!is_null($fee)){
+
+            $surcharge = ( $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total ) * $fee->fee_percentage; // creates the surchange to be applied
 	    
-        $woocommerce->cart->add_fee( $fee->fee_name, $surcharge, true, '' ); // adds the fee to the checkout cart.
-    }*/
+            $woocommerce->cart->add_fee( $fee->fee_name, $surcharge, true, '' ); // adds the fee to the checkout cart.
+        }       
+    }
 }
