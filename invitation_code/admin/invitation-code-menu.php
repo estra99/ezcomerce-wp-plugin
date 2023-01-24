@@ -3,34 +3,55 @@
 include_once(EZ_PLUGIN_DIR .'/invitation_code/includes/ic-aux-functions.php');
 
 function add_invitation_code_content() {
+
     add_menu_page('codigos-invitacion', 'Códigos de Invitación', 'manage_options' ,__FILE__, 'invitation_code_admin_page', 'dashicons-nametag');
 }
 
 function invitation_code_admin_page() {
+
     global $wpdb;
+
 	$admin_invitation_code_url = 'admin.php?page=ezcomerce-plugin%2Finvitation_code%2Fadmin%2Finvitation-code-menu.php';
+
     $table_name = $wpdb->prefix . 'ez_invitation_codes';
+
     if (isset($_POST['newsubmit'])) {
+
       $invitation_code = $_POST['new-invitation-code'];
+
       $user_role = $_POST['new-user-role'];
+
       $wpdb->query("INSERT INTO $table_name(invitation_code,user_role) VALUES('$invitation_code','$user_role')");
+
       echo "<script>location.replace('$admin_invitation_code_url');</script>";
     }
+
     if (isset($_POST['uptsubmit'])) {
+
       $id = $_POST['upt-id'];
+      
       $invitation_code = $_POST['upt-invitation-code'];
+
       $user_role = $_POST['upt-user-role'];
+
       $wpdb->query("UPDATE $table_name SET invitation_code='$invitation_code',user_role='$user_role' WHERE ID='$id'");
+
       echo "<script>location.replace('$admin_invitation_code_url');</script>";
     }
+
     if (isset($_GET['del'])) {
+
       $del_id = $_GET['del'];
+
       $wpdb->query("DELETE FROM $table_name WHERE ID='$del_id'");
+
       echo "<script>location.replace('$admin_invitation_code_url');</script>";
     }
     ?>
     <div class="wrap">
+
             <h2>Códigos de Invitación</h2>
+            
             <table class="wp-list-table widefat striped">
                 <thead>
                     <tr>
@@ -76,17 +97,27 @@ function invitation_code_admin_page() {
         <br>
         <?php
             if (isset($_GET['upt'])) {
+
             $upt_id = $_GET['upt'];
+
             $result = $wpdb->get_results("SELECT * FROM $table_name WHERE ID='$upt_id'");
+
             foreach($result as $print) {
+
                 $invitation_code = $print->invitation_code;
+                
                 $user_role = $print->user_role;
             }
+
 			$roles_arr_upt = get_role_names();
+
 			$options = "";
+
 			foreach( $roles_arr_upt as $key => $value ){
+
 				$options .= '<option value="'.$key.'">'.$value.'</option>'."\n";
 			}
+            
 			echo 
 			"
             <table class='wp-list-table widefat striped'>
